@@ -20,19 +20,19 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ secrets.AWS_REGION }}
 
-    - name: Login to ECR
+    - name: Login to Amazon ECR
       run: |
-        aws ecr get-login-password --region $AWS_REGION \
-        | docker login --username AWS --password-stdin $ECR_REPO
+        aws ecr get-login-password --region ${{ secrets.AWS_REGION }} \
+        | docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY }}
 
     - name: Build Docker image
       run: docker build -t node-app .
 
-    - name: Tag image
-      run: docker tag node-app:latest $ECR_REPO:latest
+    - name: Tag Docker image
+      run: docker tag node-app:latest ${{ secrets.ECR_REPO }}:latest
 
-    - name: Push image
-      run: docker push $ECR_REPO:latest
+    - name: Push Docker image
+      run: docker push ${{ secrets.ECR_REPO }}:latest
 
     - name: Deploy to EC2
       run: |
