@@ -41,5 +41,5 @@ jobs:
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
 
-        ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "bash /opt/node-app_live/deploy.sh"
+        ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "bash /home/ec2-user/node-app_live/deploy.sh"
 
